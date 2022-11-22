@@ -1,0 +1,32 @@
+builds:
+  - main: .
+    binary: exporter
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+changelog:
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: "Bug fixes"
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: Others
+      order: 999
+  filters:
+    exclude:
+      - "^docs:"
+      - "^build:"
+      - "^chore:"
+      - "^test:"
+      - "^[Mm]erge"
+dockers:
+  - id: production
+    goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile
+    image_templates:
+      - "ghcr.io/{{ tolower .Env.REPO_NAME }}:latest"
